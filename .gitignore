@@ -1,6 +1,6 @@
 
 ###> symfony/framework-bundle ###
-.env
+/.env
 /ezstock/.env.local
 /ezstock/.env.local.php
 /ezstock/.env.*.local
