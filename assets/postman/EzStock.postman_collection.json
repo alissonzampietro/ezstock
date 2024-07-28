@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "2fd78e60-8c51-4d58-b561-fe5aa2d088b4",
+		"name": "EzStock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12301359"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Alisson\",\n    \"email\": \"user@hansecom.com\",\n    \"password\": \"test123\",\n    \"confirmPassword\": \"test123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ezstock_api_url}}/api/user/",
+					"host": [
+						"{{ezstock_api_url}}"
+					],
+					"path": [
+						"api",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Returns token\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"token\");",
+							"});",
+							"const response = JSON.parse(pm.response.text());",
+							"pm.globals.set(\"bearer_token\", response.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"user@hansecom.com\",\n    \"password\": \"test123\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ezstock_api_url}}/api/authenticate/login",
+					"host": [
+						"{{ezstock_api_url}}"
+					],
+					"path": [
+						"api",
+						"authenticate",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ezstock_api_url}}/api/stock/market",
+					"host": [
+						"{{ezstock_api_url}}"
+					],
+					"path": [
+						"api",
+						"stock",
+						"market"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
