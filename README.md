@@ -1,6 +1,9 @@
 # EzStock
 
-![Architecture](/assets/images/ezstock.png)
+
+[<img src="assets/images/ezstock.png">](https://whimsical.com/ezstock-DvdixTAPByw9SqQki5M9pD)
+
+*Click over the image to access whimscal*
 
 ## Requirements
  - Docker: ~24
