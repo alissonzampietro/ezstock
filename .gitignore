@@ -1,10 +1,16 @@
 
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
-/vendor/
+.env
+/ezstock/.env.local
+/ezstock/.env.local.php
+/ezstock/.env.*.local
+/ezstock/.env
+/ezstock/config/secrets/prod/prod.decrypt.private.php
+/ezstock/public/bundles/
+/ezstock/var/
+/ezstock/vendor/
 ###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/ezstock/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

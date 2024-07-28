@@ -1,0 +1,23 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table user {
+  id int
+  name varchar
+  password varchar
+  is_active int
+}
+
+Table stock_history {
+  id int
+  user_id int
+  symbol varchar
+  open float
+  high float
+  low float
+  close float
+  datetime timestamp
+}
+
+
+Ref: user.id < stock_history.user_id
