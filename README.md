@@ -4,7 +4,7 @@
 
 ## Requirements
  - Docker: ~24
- - docker-compose: ~1.24
+ - docker-compose: ~1.29.2
 
 
 ## How to run the project
