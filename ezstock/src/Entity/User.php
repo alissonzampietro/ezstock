@@ -30,14 +30,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     /**
-     * @var Collection<int, StockHistory>
+     * @var Collection<int, Stock>
      */
-    #[ORM\OneToMany(targetEntity: StockHistory::class, mappedBy: 'user_id')]
-    private Collection $stockHistories;
+    #[ORM\OneToMany(targetEntity: Stock::class, mappedBy: 'user_id')]
+    private Collection $stock;
 
     public function __construct()
     {
-        $this->stockHistories = new ArrayCollection();
+        $this->stock = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,29 +89,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, StockHistory>
+     * @return Collection<int, Stock>
      */
-    public function getStockHistories(): Collection
+    public function getStock(): Collection
     {
-        return $this->stockHistories;
+        return $this->stock;
     }
 
-    public function addStockHistory(StockHistory $stockHistory): static
+    public function addStock(Stock $stock): static
     {
-        if (!$this->stockHistories->contains($stockHistory)) {
-            $this->stockHistories->add($stockHistory);
-            $stockHistory->setUserId($this);
+        if (!$this->stock->contains($stock)) {
+            $this->stock->add($stock);
+            $stock->setUserId($this);
         }
 
         return $this;
     }
 
-    public function removeStockHistory(StockHistory $stockHistory): static
+    public function removeStock(Stock $stock): static
     {
-        if ($this->stockHistories->removeElement($stockHistory)) {
+        if ($this->stock->removeElement($stock)) {
             // set the owning side to null (unless already changed)
-            if ($stockHistory->getUserId() === $this) {
-                $stockHistory->setUserId(null);
+            if ($stock->getUserId() === $this) {
+                $stock->setUserId(null);
             }
         }
 

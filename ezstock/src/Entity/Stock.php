@@ -2,19 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\StockHistoryRepository;
+use App\Repository\StockRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: StockHistoryRepository::class)]
-class StockHistory
+#[ORM\Entity(repositoryClass: StockRepository::class)]
+class Stock
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'stockHistories')]
+    #[ORM\ManyToOne(inversedBy: 'stock')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user_id = null;
 
@@ -33,8 +33,8 @@ class StockHistory
     #[ORM\Column]
     private ?float $close = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $datetime = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeInterface $created_at = null;
 
     public function getId(): ?int
     {
@@ -122,12 +122,12 @@ class StockHistory
 
     public function getDatetime(): ?\DateTimeInterface
     {
-        return $this->datetime;
+        return $this->created_at;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): static
+    public function setDatetime(\DateTimeInterface $created_at): static
     {
-        $this->datetime = $datetime;
+        $this->created_at = $created_at;
 
         return $this;
     }

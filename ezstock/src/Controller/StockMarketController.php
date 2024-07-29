@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\StockMarketService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,12 +11,25 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/stock', name: 'app_stock_market')]
 class StockMarketController extends AbstractController
 {
-    #[Route('/market', methods: ['GET'])]
-    public function index(): JsonResponse
+    private $entityManager;
+    private $stockService;
+    public function __construct(StockMarketService $stockService, EntityManagerInterface $entityManager,)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/StockMarketController.php',
-        ]);
+        $this->stockService = $stockService;
+        $this->entityManager = $entityManager;
+    }
+    #[Route('/{symbol}', methods: ['GET'])]
+    public function getQuote(string $symbol): JsonResponse
+    {
+        $result = $this->stockService->getQuote($symbol);
+
+        $this->entityManager->persist($result);
+        $this->entityManager->flush();
+
+        if (!$result) {
+            return $this->json(['data' => []]);
+        }
+
+        return $this->json(['data' => $result]);
     }
 }
