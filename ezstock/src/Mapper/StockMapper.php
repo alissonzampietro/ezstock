@@ -9,12 +9,9 @@ use DateTime;
 
 class StockMapper implements StockMapperInterface
 {
-    private $userService;
-
     public function __construct(
-        UserService $userService
+        private UserService $userService
     ) {
-        $this->userService = $userService;
     }
 
 
@@ -36,7 +33,7 @@ class StockMapper implements StockMapperInterface
         return $stock;
     }
 
-    public function mapToResponseQuoteDto(Stock $stock)
+    public function mapToResponseQuoteDto(Stock $stock): StockQuoteResponseDto
     {
         return new StockQuoteResponseDto(
             $stock->getSymbol(),

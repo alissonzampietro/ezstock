@@ -2,19 +2,18 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class UserService
 {
-    private $tokenStorage;
-
-    public function __construct(TokenStorageInterface $storage)
-    {
-        $this->tokenStorage = $storage;
+    public function __construct(
+        private TokenStorageInterface $tokenStorage
+    ) {
     }
 
-    public function getCurrentUser()
+    public function getCurrentUser(): User
     {
         $token = $this->tokenStorage->getToken();
         if ($token instanceof TokenInterface) {
@@ -25,5 +24,11 @@ class UserService
         } else {
             return null;
         }
+    }
+
+    public function getTokenEmail(): null|string
+    {
+        $user = $this->getCurrentUser();
+        return $user->getEmail() ?? null;
     }
 }

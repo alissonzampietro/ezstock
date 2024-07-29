@@ -3,24 +3,26 @@
 namespace App\Controller;
 
 use App\Mapper\StockMapper;
+use App\Message\StockEmailMessage;
+use App\Repository\StockRepository;
 use App\Service\StockMarketService;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 #[Route('/api/stock', name: 'app_stock_market')]
 class StockMarketController extends AbstractController
 {
-    private $stockService;
-    private $stockMapper;
     public function __construct(
-        StockMarketService $stockService,
-        StockMapper $stockMapper
+        private StockMarketService $stockService,
+        private UserService $userService,
+        private StockRepository $stockRepository,
+        private StockMapper $stockMapper,
+        private MessageBusInterface $messageBus,
     ) {
-        $this->stockService = $stockService;
-        $this->stockMapper = $stockMapper;
     }
     #[Route('/{symbol}', methods: ['GET'])]
     public function getQuote(string $symbol): JsonResponse
@@ -31,6 +33,12 @@ class StockMarketController extends AbstractController
             return $this->json(['data' => []]);
         }
 
-        return $this->json(['data' => $this->stockMapper->mapToResponseQuoteDto($result)]);
+        $this->stockRepository->save($result);
+
+        $mappedData = $this->stockMapper->mapToResponseQuoteDto($result);
+
+        $this->messageBus->dispatch(new StockEmailMessage($this->userService->getTokenEmail(), $mappedData));
+
+        return $this->json(['data' => $mappedData]);
     }
 }

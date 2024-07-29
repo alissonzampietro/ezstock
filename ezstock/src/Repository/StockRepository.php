@@ -12,12 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StockRepository extends ServiceEntityRepository
 {
-    private $entityManager;
-
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private EntityManagerInterface $entityManager
+    ) {
         parent::__construct($registry, Stock::class);
-        $this->entityManager = $entityManager;
     }
 
     public function save(Stock $stock): void

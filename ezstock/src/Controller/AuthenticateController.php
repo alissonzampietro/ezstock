@@ -17,17 +17,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/authenticate')]
 class AuthenticateController extends AbstractController
 {
-
-    private $passwordHasher;
-
-    private $entityManager;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher
     ) {
-        $this->passwordHasher = $passwordHasher;
-        $this->entityManager = $entityManager;
     }
     #[Route('/login', methods: ['POST'], name: 'app_authenticate')]
     public function index(#[MapRequestPayload] UserLoginRequestDto $loginDto, UserRepository $repository): JsonResponse

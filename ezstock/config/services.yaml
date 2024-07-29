@@ -6,6 +6,8 @@
 parameters:
 
 services:
+    App\Message\StockEmailMessageHandler:
+        tags: ['messenger.message_handler']
     GuzzleHttp\Client:
         arguments:
             - { timeout: 5.0 }

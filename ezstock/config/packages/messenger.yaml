@@ -1,8 +1,17 @@
 # config/packages/messenger.yaml
+parameters:
+    messenger_dns: '%env(MESSENGER_TRANSPORT_DSN)%'
 
 framework:
     messenger:
         transports:
-            amqp: '%env(MESSENGER_TRANSPORT_DSN)%'
+            amqp:
+                dsn: '%messenger_dns%'
+                options:
+                    exchange:
+                        name: 'messages'
+                        type: direct
+                    queues:
+                        stock_quote_queue: ~
         routing:
-            'App\Message\EmailMessaging': amqp
+            'App\Message\StockEmailMessage': amqp

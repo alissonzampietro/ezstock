@@ -2,29 +2,25 @@
 
 namespace App\DTO;
 
-class StockQuoteResponseDto
-{
-    private $symbol;
-    private $open;
-    private $high;
-    private $low;
-    private $close;
-    private $createdAt;
+use App\Entity\Stock;
+use DateTime;
 
-    public function __construct(string $symbol, float $open, float $high, float $low, float $close, \DateTime $createdAt)
-    {
-        $this->symbol = $symbol;
-        $this->open = $open;
-        $this->high = $high;
-        $this->low = $low;
-        $this->close = $close;
-        $this->createdAt = $createdAt;
+class StockQuoteResponseDto extends Stock
+{
+    public function __construct(
+        private string $symbol,
+        private float $open,
+        private float $high,
+        private float $low,
+        private float $close,
+        private \DateTime $createdAt
+    ) {
     }
 
     /**
      * Get the value of symbol
      */
-    public function getSymbol()
+    public function getSymbol(): null|string
     {
         return $this->symbol;
     }
@@ -32,7 +28,7 @@ class StockQuoteResponseDto
     /**
      * Get the value of open
      */
-    public function getOpen()
+    public function getOpen(): ?float
     {
         return $this->open;
     }
@@ -40,7 +36,7 @@ class StockQuoteResponseDto
     /**
      * Get the value of high
      */
-    public function getHigh()
+    public function getHigh(): null|float
     {
         return $this->high;
     }
@@ -48,7 +44,7 @@ class StockQuoteResponseDto
     /**
      * Get the value of low
      */
-    public function getLow()
+    public function getLow(): null|float
     {
         return $this->low;
     }
@@ -56,7 +52,7 @@ class StockQuoteResponseDto
     /**
      * Get the value of close
      */
-    public function getClose()
+    public function getClose(): null|float
     {
         return $this->close;
     }
@@ -64,7 +60,7 @@ class StockQuoteResponseDto
     /**
      * Get the value of createdAt
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): null|DateTime
     {
         return $this->createdAt;
     }

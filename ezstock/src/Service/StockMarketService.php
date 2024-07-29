@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Entity\Stock;
 use App\Mapper\StockMapperInterface;
+use App\Message\StockEmailMessage;
 use App\Repository\StockRepository;
 use GuzzleHttp\Client;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class StockMarketService
 {
@@ -13,18 +15,16 @@ class StockMarketService
     private $client;
     private $apiKey;
     private $stockMapper;
-    private $stockRepository;
+    private $messageBus;
 
     public function __construct(
         Client $client,
         string $apiKey,
-        StockRepository $stockRepository,
         StockMapperInterface $stockMapper,
     ) {
         $this->client = $client;
         $this->apiKey = $apiKey;
         $this->stockMapper = $stockMapper;
-        $this->stockRepository = $stockRepository;
     }
 
     public function getQuote(string $symbol): Stock
@@ -42,9 +42,9 @@ class StockMarketService
         $response = $this->client->request('GET', $url);
 
         $data = json_decode($response->getBody()->getContents(), true);
-        $mappedData = $this->stockMapper->map($data);
 
-        $this->stockRepository->save($mappedData);
+
+        $mappedData = $this->stockMapper->map($data);
 
         return $mappedData;
     }
