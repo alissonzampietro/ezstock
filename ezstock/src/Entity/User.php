@@ -29,17 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json', options: ["default" => '["ROLE_USER'])]
     private $roles = [];
 
-    /**
-     * @var Collection<int, Stock>
-     */
-    #[ORM\OneToMany(targetEntity: Stock::class, mappedBy: 'user_id')]
-    private Collection $stock;
-
-    public function __construct()
-    {
-        $this->stock = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -87,37 +76,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Stock>
-     */
-    public function getStock(): Collection
-    {
-        return $this->stock;
-    }
-
-    public function addStock(Stock $stock): static
-    {
-        if (!$this->stock->contains($stock)) {
-            $this->stock->add($stock);
-            $stock->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStock(Stock $stock): static
-    {
-        if ($this->stock->removeElement($stock)) {
-            // set the owning side to null (unless already changed)
-            if ($stock->getUserId() === $this) {
-                $stock->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getRoles(): array
     {
         $roles = $this->roles;

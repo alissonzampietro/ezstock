@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Stock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,10 +12,21 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StockRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $entityManager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Stock::class);
+        $this->entityManager = $entityManager;
     }
+
+    public function save(Stock $stock): void
+    {
+        $this->entityManager->persist($stock);
+        $this->entityManager->flush();
+    }
+
+    //TODO: pass all database search into this repository
 
     //    /**
     //     * @return Stock[] Returns an array of Stock objects

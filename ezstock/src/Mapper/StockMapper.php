@@ -2,10 +2,22 @@
 
 namespace App\Mapper;
 
+use App\DTO\StockQuoteResponseDto;
 use App\Entity\Stock;
+use App\Service\UserService;
+use DateTime;
 
 class StockMapper implements StockMapperInterface
 {
+    private $userService;
+
+    public function __construct(
+        UserService $userService
+    ) {
+        $this->userService = $userService;
+    }
+
+
     public function map(array $data): Stock
     {
         if (!isset($data['Global Quote'])) {
@@ -18,7 +30,21 @@ class StockMapper implements StockMapperInterface
         $stock->setHigh($data['Global Quote']['03. high'] ?? null);
         $stock->setLow($data['Global Quote']['04. low'] ?? null);
         $stock->setClose($data['Global Quote']['08. previous close']  ?? null);
+        $stock->setUserId($this->userService->getCurrentUser());
+        $stock->setCreatedAt(new DateTime());
 
         return $stock;
+    }
+
+    public function mapToResponseQuoteDto(Stock $stock)
+    {
+        return new StockQuoteResponseDto(
+            $stock->getSymbol(),
+            $stock->getOpen(),
+            $stock->getHigh(),
+            $stock->getLow(),
+            $stock->getClose(),
+            $stock->getCreatedAt(),
+        );
     }
 }

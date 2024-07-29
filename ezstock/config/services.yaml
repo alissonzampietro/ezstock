@@ -10,9 +10,6 @@ services:
         arguments:
             - { timeout: 5.0 }
     
-    stock_user_service:
-        class: App\Service\UserService
-        arguments: [ '@security.token_storage' ]
     App\Service\StockMarketService:
         arguments:
             $client: '@GuzzleHttp\Client'

@@ -34,7 +34,7 @@ class Stock
     private ?float $close = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeInterface $created_at = null;
+    private ?\DateTimeInterface $created_at;
 
     public function getId(): ?int
     {
@@ -120,12 +120,12 @@ class Stock
         return $this;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setDatetime(\DateTimeInterface $created_at): static
+    public function setCreatedAt(?\DateTimeInterface $created_at): static
     {
         $this->created_at = $created_at;
 
