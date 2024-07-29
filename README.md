@@ -1,4 +1,4 @@
-# EzStock
+# :dollar: EzStock
 
 
 [<img src="assets/images/ezstock.png">](https://whimsical.com/ezstock-DvdixTAPByw9SqQki5M9pD)
