@@ -6,6 +6,9 @@
 parameters:
 
 services:
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: 'kernel.event_subscriber' }
     App\Message\StockEmailMessageHandler:
         tags: ['messenger.message_handler']
     GuzzleHttp\Client:

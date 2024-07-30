@@ -24,7 +24,6 @@ class AuthenticateController extends AbstractController
     #[Route('/login', methods: ['POST'], name: 'app_authenticate')]
     public function index(#[MapRequestPayload] UserLoginRequestDto $loginDto, UserRepository $repository): JsonResponse
     {
-        die(2);
         $user = $repository->findOneBy(['email' => $loginDto->email]);
 
         if ($this->passwordHasher->isPasswordValid($user, $loginDto->password)) {

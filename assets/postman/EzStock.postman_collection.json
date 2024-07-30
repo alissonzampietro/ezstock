@@ -81,7 +81,7 @@
 			"response": []
 		},
 		{
-			"name": "Stock",
+			"name": "Get Stock",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -96,14 +96,49 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ezstock_api_url}}/api/stock/market",
+					"raw": "{{ezstock_api_url}}/api/stock/?symbol=ibm",
 					"host": [
 						"{{ezstock_api_url}}"
 					],
 					"path": [
 						"api",
 						"stock",
-						"market"
+						""
+					],
+					"query": [
+						{
+							"key": "symbol",
+							"value": "ibm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ezstock_api_url}}/api/stock/history",
+					"host": [
+						"{{ezstock_api_url}}"
+					],
+					"path": [
+						"api",
+						"stock",
+						"history"
 					]
 				}
 			},

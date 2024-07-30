@@ -17,23 +17,17 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 #[Route('/api/user')]
 final class UserController extends AbstractController
 {
-    private $entityManager;
-    private $passwordHasher;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher,
+        private EntityManagerInterface $entityManager,
+        private UserPasswordHasherInterface $passwordHasher,
+        private UserRepository $userRepository,
     ) {
-        $this->entityManager = $entityManager;
-        $this->passwordHasher = $passwordHasher;
     }
 
     #[Route('/', methods: ["POST"])]
     public function create(#[MapRequestPayload] UserRegisterRequestDto $userDto, ValidatorInterface $validator): JsonResponse
     {
-        //TODO: implement confirm password
-        //TODO: create validator of the fields
-        //TODO: create user using the repository
         $errors = $validator->validate($userDto);
         if (count($errors) > 0) {
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
@@ -44,8 +38,7 @@ final class UserController extends AbstractController
         $user->setName($userDto->name);
         $user->setPassword($this->passwordHasher->hashPassword($user, $userDto->password));
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->userRepository->save($user);
 
         return $this->json(['message' => 'User created'], Response::HTTP_CREATED);
     }

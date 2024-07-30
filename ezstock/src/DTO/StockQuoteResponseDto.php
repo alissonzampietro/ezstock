@@ -5,16 +5,18 @@ namespace App\DTO;
 use App\Entity\Stock;
 use DateTime;
 
-class StockQuoteResponseDto extends Stock
+class StockQuoteResponseDto
 {
+    private $createdAt;
     public function __construct(
         private string $symbol,
         private float $open,
         private float $high,
         private float $low,
         private float $close,
-        private \DateTime $createdAt
+        \DateTime $createdAt
     ) {
+        $this->createdAt = $createdAt->format('Y-m-d H:i:s');
     }
 
     /**
@@ -60,7 +62,7 @@ class StockQuoteResponseDto extends Stock
     /**
      * Get the value of createdAt
      */
-    public function getCreatedAt(): null|DateTime
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
