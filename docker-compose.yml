@@ -60,7 +60,7 @@ services:
     depends_on:
       - mailhog
   alphavantage:
-    build: 
+    build:
       context: .
       dockerfile: assets/json_server/Dockerfile
     container_name: alphavantage
@@ -76,6 +76,19 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+    networks:
+      - symfony_network
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./ezstock-fe/Dockerfile
+    ports:
+      - "5000:5000" # Map port 5000 of the container to port 5000 on the host
+    volumes:
+      - ./ezstock-fe/:/app # Mount the current directory to /app inside the container
+    environment:
+      - NODE_ENV=production
     networks:
       - symfony_network
 

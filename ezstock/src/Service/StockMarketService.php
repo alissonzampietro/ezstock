@@ -27,19 +27,30 @@ class StockMarketService
         $this->stockMapper = $stockMapper;
     }
 
-    public function getQuote(string $symbol): Stock
+    private function getRealQuote(string $symbol)
     {
-        // $url = 'https://www.alphavantage.co/query';
-        // $response = $this->client->request('GET', $url, [
-        //     'query' => [
-        //         'function' => 'GLOBAL_QUOTE',
-        //         'symbol' => $symbol,
-        //         'apikey' => $this->apiKey,
-        //     ]
-        // ]);
+        $url = 'https://www.alphavantage.co/query';
+        $response = $this->client->request('GET', $url, [
+            'query' => [
+                'function' => 'GLOBAL_QUOTE',
+                'symbol' => $symbol,
+                'apikey' => $this->apiKey,
+            ]
+        ]);
+        return $response;
+    }
 
+    private function getFakeQuote(string $symbol)
+    {
         $url = 'http://alphavantage:3000/quotes';
         $response = $this->client->request('GET', $url);
+        return $response;
+    }
+
+    public function getQuote(string $symbol): Stock
+    {
+        // $response = $this->getRealQuote($symbol);
+        $response = $this->getFakeQuote($symbol);
 
         $data = json_decode($response->getBody()->getContents(), true);
 
