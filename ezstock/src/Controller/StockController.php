@@ -39,6 +39,7 @@ class StockController extends AbstractController
 
         $mappedData = $this->stockMapper->mapToResponseQuoteDto($result);
 
+        //TODO: automatically run the dispatcher (since today we have to run it manually)
         $this->messageBus->dispatch(new StockEmailMessage($this->userService->getCurrentUser(), $mappedData));
 
         return $this->json(['data' => $mappedData]);
