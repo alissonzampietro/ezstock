@@ -51,5 +51,6 @@ You can find all postman files (environments file and collections file) to be im
 
 ## TODO
 
-- Create frontend
+- Make frontend runs
+- Implement unit testing
 - Run rabbitmq automatically, without the need of running the command line on container
