@@ -14,9 +14,7 @@
 
  - Rename .env.examples variables (one in the root and the other one into ezstock folder)
    - The root .env is related to docker.compose environment
-
-
-`docker-compose up`
+ - `docker-compose up`
 
 ## Services
 
@@ -39,4 +37,4 @@ I just created this container because the public api from alphavantage only supp
  - `docker exec php bin/console doctrine:migrations:execute --up DoctrineMigrations\\Version20240730002030`
 
 ## Import postman
-You can find all postman files inside the folder `assets/postman`. Just import both files to your postman app.
+You can find all postman files (environments file and collections file) to be imported inside the folder `assets/postman`.
