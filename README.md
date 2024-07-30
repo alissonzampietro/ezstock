@@ -38,3 +38,7 @@ I just created this container because the public api from alphavantage only supp
 
 ## Import postman
 You can find all postman files (environments file and collections file) to be imported inside the folder `assets/postman`.
+
+## TODO
+ - Create frontend
+ - Run rabbitmq automatically, without the need of running the command line on container
