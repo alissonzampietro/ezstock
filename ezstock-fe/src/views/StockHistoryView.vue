@@ -1,9 +1,7 @@
 <template>
-    <div id="app">
       <AuthenticatedArea>
         <StockHistory />
       </AuthenticatedArea>
-    </div>
   </template>
   
   <script>
