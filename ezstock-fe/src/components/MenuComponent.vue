@@ -14,7 +14,7 @@
                 <a class="nav-link" href="/history">History</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/graph">Graph</a>
+                <a class="nav-link" href="/chart">Charts</a>
             </li>
             </ul>
         </div>

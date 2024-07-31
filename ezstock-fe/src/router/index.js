@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import StockHistoryView from '../views/StockHistoryView.vue'
 import StockSearchView from '../views/StockSearchView.vue'
+import ChartView from '../views/ChartView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
@@ -29,6 +30,14 @@ const router = createRouter({
       path: '/search',
       name: 'stock-search',
       component: StockSearchView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/chart',
+      name: 'chart',
+      component: ChartView,
       meta: {
         requiresAuth: true
       }

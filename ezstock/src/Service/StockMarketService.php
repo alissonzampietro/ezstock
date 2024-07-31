@@ -49,8 +49,8 @@ class StockMarketService
 
     public function getQuote(string $symbol): Stock
     {
-        // $response = $this->getRealQuote($symbol);
-        $response = $this->getFakeQuote($symbol);
+        $response = $this->getRealQuote($symbol);
+        // $response = $this->getFakeQuote($symbol);
 
         $data = json_decode($response->getBody()->getContents(), true);
 

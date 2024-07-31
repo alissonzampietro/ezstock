@@ -1,15 +1,9 @@
 <template>
     <div class="container mt-5">
       <h1 class="text-center">Stock Search</h1>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Search by symbol"
-        v-model="symbol"
-      />
-      <button class="btn btn-primary" @click="searchStock">Search</button>
+      <SearchbarComponent placeholder="Search by symbol" @onSearch="searchStock"/>
       <div v-if="error" class="alert alert-danger">{{ error }}</div>
-      <table v-if="!loading && !error" class="table table-striped">
+      <table v-if="!loading && !error" class="table table-striped mt-5">
         <thead>
           <tr>
             <th>Symbol</th>
@@ -36,29 +30,31 @@
   
   <script>
   import axiosInstance from '../axios';
+  import SearchbarComponent from './SearchbarComponent.vue';
   
   export default {
+    components: {
+      SearchbarComponent
+    },
     data() {
       return {
-        symbol: '',
         stock: {},
         loading: true,
         error: null,
       };
     },
     methods: {
-      async searchStock() {
+      async searchStock(symbol) {
         try {
-          if(!this.symbol) {
+          if(!symbol) {
             throw new Error('Symbol is empty')
           }
-          const response = await axiosInstance.get('/api/stock/?symbol='+this.symbol, {
+          const response = await axiosInstance.get('/api/stock/?symbol='+symbol, {
             headers: {
               Authorization: localStorage.getItem('token')
             }
           });
           this.stock = response.data.data;
-          this.symbol = '';
         } catch (error) {
           this.error = error.message ?? 'Failed to fetch stock';
           console.error(error);

@@ -2,7 +2,9 @@
   <div class="login-view">
     <LoginComponent v-if="logIn"/>
     <RegisterComponent v-if="!logIn"/>
-    <a v-on:click="logIn = !logIn">Click here to {{logIn ? 'register' : 'login'}}</a>
+  </div>
+  <div class="text-center mt-3">
+    <a v-on:click="logIn = !logIn" class="login-link text-center">{{logIn ? 'Don\'t have an account? Register here' : 'Already have an account? Login here'}}</a>
   </div>
 </template>
 <script>
@@ -26,5 +28,10 @@ export default {
   .login-view {
     width: 100%;
   }
+}
+
+.login-link:hover {
+  cursor: pointer !important;
+  color: blue !important;
 }
 </style>

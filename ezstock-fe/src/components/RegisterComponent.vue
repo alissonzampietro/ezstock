@@ -15,7 +15,7 @@
                   required
                 />
               </div>
-              <div class="form-group">
+              <div class="form-group mt-4">
                 <label for="email">Email:</label>
                 <input
                   type="email"
@@ -25,7 +25,7 @@
                   required
                 />
               </div>
-              <div class="form-group">
+              <div class="form-group mt-4">
                 <label for="password">Password:</label>
                 <input
                   type="password"
@@ -35,7 +35,7 @@
                   required
                 />
               </div>
-              <div class="form-group">
+              <div class="form-group mt-4">
                 <label for="confirmPassword">Confirm Password:</label>
                 <input
                   type="password"
@@ -45,7 +45,7 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary btn-block mt-10">
+              <button type="submit" class="btn btn-primary btn-block mt-4">
                 Register
               </button>
             </form>
