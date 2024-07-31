@@ -3,7 +3,7 @@
       <h1 class="text-center">Stock Search</h1>
       <SearchbarComponent placeholder="Search by symbol" @onSearch="searchStock"/>
       <div v-if="error" class="alert alert-danger">{{ error }}</div>
-      <table v-if="!loading && !error" class="table table-striped mt-5">
+      <table v-if="!firstLoad && !error && !searching" class="table table-striped mt-5">
         <thead>
           <tr>
             <th>Symbol</th>
@@ -25,6 +25,7 @@
           </tr>
         </tbody>
       </table>
+      <p v-if="searching" class="text-center mt-3">Searching...</p>
     </div>
   </template>
   
@@ -39,12 +40,14 @@
     data() {
       return {
         stock: {},
-        loading: true,
+        firstLoad: true,
+        searching: false,
         error: null,
       };
     },
     methods: {
       async searchStock(symbol) {
+        this.searching = true;
         try {
           if(!symbol) {
             throw new Error('Symbol is empty')
@@ -55,11 +58,13 @@
             }
           });
           this.stock = response.data.data;
+          this.searching = false;
         } catch (error) {
           this.error = error.message ?? 'Failed to fetch stock';
           console.error(error);
+          this.searching = false;
         } finally {
-          this.loading = false;
+          this.firstLoad = false;
         }
       },
     },
