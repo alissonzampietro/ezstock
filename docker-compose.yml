@@ -84,9 +84,9 @@ services:
       context: .
       dockerfile: ./ezstock-fe/Dockerfile
     ports:
-      - "5000:5000" # Map port 5000 of the container to port 5000 on the host
+      - "5000:5000"
     volumes:
-      - ./ezstock-fe/:/app # Mount the current directory to /app inside the container
+      - ./ezstock-fe/:/app
     environment:
       - NODE_ENV=production
     networks:

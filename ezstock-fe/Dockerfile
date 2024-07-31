@@ -11,8 +11,6 @@ COPY ./ezstock-fe .
 RUN rm -rf dist/
 RUN npm run build
 
-RUN cat src/axios.js
-
 RUN npm install -g serve
 
 CMD ["serve", "-s", "dist", "-p", "5000"]

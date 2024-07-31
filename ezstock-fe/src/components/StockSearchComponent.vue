@@ -46,11 +46,6 @@
         error: null,
       };
     },
-    created() {
-      if(!localStorage.getItem('token')) {
-        window.location.href = "/login"
-      }
-    },
     methods: {
       async searchStock() {
         try {
@@ -63,6 +58,7 @@
             }
           });
           this.stock = response.data.data;
+          this.symbol = '';
         } catch (error) {
           this.error = error.message ?? 'Failed to fetch stock';
           console.error(error);

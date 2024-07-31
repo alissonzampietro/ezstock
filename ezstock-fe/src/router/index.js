@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import StockHistoryView from '../views/StockHistoryView.vue'
 import StockSearchView from '../views/StockSearchView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,14 +20,38 @@ const router = createRouter({
     {
       path: '/history',
       name: 'stock-history',
-      component: StockHistoryView
+      component: StockHistoryView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/search',
       name: 'stock-search',
-      component: StockSearchView
+      component: StockSearchView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    { 
+      path: "/:pathMatch(.*)*", 
+      name: 'not-found',
+      component: NotFoundView 
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

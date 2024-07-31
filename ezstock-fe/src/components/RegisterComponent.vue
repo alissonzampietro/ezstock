@@ -93,6 +93,9 @@ export default {
         this.cleanFields();
         this.alertMessage = response.data.message;
         this.alertClass = 'alert-success';
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 2000);
       }catch(error) {
         this.alertMessage = error.response.data.message;
         this.alertClass = 'alert-danger';

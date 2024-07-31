@@ -15,27 +15,23 @@ _Click over the image to access whimscal_
   - The root .env is related to docker.compose environment
 - `docker-compose up`
 - `docker-compose exec php bin/console doctrine:migrations:execute --up DoctrineMigrations\\Version20240730002030`
-- `docker-compose exec php php bin/console messenger:consume amqp -vv`
+- `docker-compose exec php bin/console messenger:consume amqp -vv`
 
-After this, check if frontend is running on the following domain: `http://localhost:5000/`. If the container is not working yet (maybe a CORS issue that i'm working on), you can test the front end following these steps:
-
-- Using the terminal, access the ezstock-fe folder
-- run `npm install`
-- run `npm run dev`
+After this, check if frontend is running on the following URL: [http://localhost:5000/](http://localhost:5000/).
 
 ## Services
 
 ### MailHog
 
-All e-mails are sent to this container. If you want to validate if your e-mail was received, just access the following link: `http://localhost:8025/`
+All e-mails are sent to this container. If you want to validate if your e-mail was received, just access the following link: [http://localhost:8025/](http://localhost:8025/)
 
 ### Rabbimq
 
-You can track all requests and make a traffic analysis, accessing this link: `http://localhost:15672/#/`. The credentials are set in the `.env` file.
+You can track all requests and make a traffic analysis, accessing this link: [http://localhost:15672/#/](http://localhost:15672/#/). The credentials are set in the [.env](https://github.com/alissonzampietro/ezstock/blob/62d87ebee71b51c2f59c8f65c7d901d2c4efbba8/.env.example#L6-L7) file.
 
 ### alphavantage
 
-I just created this container because the public api from alphavantage only supports 25 requests, Thus, this service only returns a dumb JSON (doesn't matter if you change the query parameter)
+I just created this container because the public api from alphavantage only supports 25 requests per day, thus, this service only returns a dumb JSON (doesn't matter if you change the query parameter)
 
 ## Utils Container Commands
 
@@ -51,6 +47,5 @@ You can find all postman files (environments file and collections file) to be im
 
 ## TODO
 
-- Make frontend runs
 - Implement unit testing
 - Run rabbitmq automatically, without the need of running the command line on container
