@@ -94,7 +94,7 @@ export default {
         this.alertMessage = response.data.message;
         this.alertClass = 'alert-success';
         setTimeout(() => {
-          window.location.href = '/'
+          window.location.href = '/login'
         }, 2000);
       }catch(error) {
         this.alertMessage = error.response.data.message;
